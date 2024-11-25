@@ -1,40 +1,75 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+# Ignore IDEs configuration files
+.idea/
+**/.vscode/*
+!**/.vscode/settings.json.default
+!**/.vscode/extensions.json
 
-# dependencies
-/node_modules
-/.pnp
-.pnp.*
-.yarn/*
-!.yarn/patches
-!.yarn/plugins
-!.yarn/releases
-!.yarn/versions
+# Ignore Terraform run-time files
+deploy/infrastructure/terraform/.terraform
+deploy/infrastructure/terraform/.terraform.lock.hcl
+deploy/infrastructure/terraform/terraform.tfplan
 
-# testing
-/coverage
+# Ignore configuration files that may contain sensitive information
+server/web/sites/*/*settings*.php
+server/web/sites/*/*services*.yml
 
-# next.js
-/.next/
-/out/
+# Ignore paths that may contain user-generated content
+server/web/sites/*/files
+server/web/sites/*/public
+server/web/sites/*/private
+server/web/sites/*/files-public
+server/web/sites/*/files-private
+server/private
+server/config/webform.webform.*.yml
 
-# production
-/build
+# Ignore paths that may contain temporary files
+server/web/sites/*/translations
+server/web/sites/*/tmp
+server/web/sites/*/cache
 
-# misc
+# Ignore drupal core (if not versioning drupal sources)
+server/web/core
+server/web/modules/README.txt
+server/web/profiles/README.txt
+server/web/sites/README.txt
+server/web/sites/example.sites.php
+server/web/sites/example.settings.local.php
+server/web/sites/development.services.yml
+server/web/themes/README.txt
+server/web/themes/contrib
+server/web/modules/contrib
+server/vendor
+server/bkp
+server/backup
+server/web/.csslintrc
+server/web/.editorconfig
+server/web/.eslintignore
+server/web/.eslintrc.json
+server/web/.gitattributes
+server/web/.htaccess
+server/web/autoload.php
+server/web/composer.json
+server/web/composer.lock
+server/web/example.gitignore
+server/web/index.php
+server/web/LICENSE.txt
+server/web/README.txt
+server/web/robots.txt
+server/web/update.php
+server/webserver/backend/web.config
+server/.editorconfig
+server/.gitattributes
+server/web/.ht.router.php
+server/web/INSTALL.txt
+server/web/README.md
+server/web/themes/custom/*/node_modules
+server/web/libraries
+
+# Sensitive data
+deploy/envs/*.sensitive.sh
+
+# Ignore local config
+.env.local.sh
+
+# Various local temporary data
 .DS_Store
-*.pem
-
-# debug
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
-# env files (can opt-in for committing if needed)
-.env*
-
-# vercel
-.vercel
-
-# typescript
-*.tsbuildinfo
-next-env.d.ts
