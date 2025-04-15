@@ -14,10 +14,19 @@ export type ButtonProps = React.HTMLAttributes<HTMLElement> & {
   neutral?: boolean;
   disabled?: boolean;
   asChild?: boolean;
+  type?: 'button' | 'submit' | 'reset';
   children: React.ReactNode;
 };
 export const Button = forwardRef(function Button(
-  { className, children, primary: isPrimary, neutral: isNeutral, asChild, ...props }: ButtonProps,
+  {
+    className,
+    children,
+    primary: isPrimary,
+    neutral: isNeutral,
+    asChild,
+    type = 'button',
+    ...props
+  }: ButtonProps,
   ref: React.Ref<HTMLButtonElement>,
 ) {
   const [isLabelVisible, setIsLabelVisible] = useState(true);
@@ -39,11 +48,11 @@ export const Button = forwardRef(function Button(
             'h-10',
             'rounded',
             'outline-none',
-            'border',
             'disabled:opacity-70',
             'focus-visible:ring',
-            'focus-visible:ring-amber-500/50',
+            'focus-visible:ring-violet-400',
             'transition-colors',
+            'transition-shadow',
             '[&>svg]:justify-self-end',
             '[&>svg]:text-2xl',
             '[&>svg]:transition-transform',
@@ -51,11 +60,13 @@ export const Button = forwardRef(function Button(
             isPrimary
               ? [
                   'primary',
-                  'border-amber-600',
-                  'text-white',
-                  'bg-amber-600',
-                  '[&:not(:disabled):hover]:!bg-amber-700',
-                  '[&:not(:disabled):hover]:border-amber-700',
+                  'bg-white/25',
+                  'rounded-lg',
+                  'shadow-white/20',
+                  'shadow-inner',
+                  'focus-visible:shadow-white',
+                  'focus-visible:ring-0',
+                  '[&:not(:disabled):hover]:!bg-white/30',
                   'duration-300',
                 ]
               : isNeutral
@@ -76,7 +87,7 @@ export const Button = forwardRef(function Button(
           ref={ref}
           {...props}
         >
-          {asChild ? children : <button type="button">{children}</button>}
+          {asChild ? children : <button type={type}>{children}</button>}
         </Slot>
       </ButtonTooltip>
     </ButtonContextProvider>
