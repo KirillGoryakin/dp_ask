@@ -2,6 +2,7 @@
 
 import clsx from 'clsx';
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 import { Field, Form, Input, SubmitButton } from '@/components/form';
 
@@ -13,6 +14,7 @@ export type SignupFormProps = {
 };
 
 export function SignupForm({ className }: SignupFormProps) {
+  const { replace } = useRouter();
   const { user } = useUser();
   const [isNewAccount, setIsNewAccount] = useState<boolean>(false);
   if (user === undefined) {
@@ -39,9 +41,7 @@ export function SignupForm({ className }: SignupFormProps) {
     );
   }
   if (user) {
-    return <>Redirect</>;
-
-    // redirect
+    replace('/topics');
     return null;
   }
   return (

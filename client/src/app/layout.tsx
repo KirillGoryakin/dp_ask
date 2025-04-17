@@ -30,6 +30,7 @@ export default function RootLayout({ header, dialogs, children }: Props) {
             'from-indigo-500',
             'to-[#7142aa]',
             'bg-no-repeat',
+            'pb-16',
           )}
         >
           <div className={clsx('flex', 'flex-col', 'min-h-[calc(100vh-4rem)]')}>

@@ -8,26 +8,31 @@ import { getFirebaseAuth, getFirestore } from '@/firebase';
 
 import { User } from './types';
 
-type UserContext = { user: undefined | null | User; refreshUser: () => Promise<void> | void };
+type UserContext = { user: undefined | null | User };
 
 const defaultValue: UserContext = {
   user: undefined,
-  refreshUser: () => {},
 };
 const Context = createContext<UserContext>(defaultValue);
 
 export function UserProvider({ children }: PropsWithChildren) {
   const [user, setUser] = useState<UserContext['user']>(undefined);
-  getFirebaseAuth().onAuthStateChanged((user) => {
-    if (user) {
-      getDoc(doc(getFirestore(), 'users', user.uid)).then((userDoc) => {
-        setUser({ id: user.uid, email: user.email!, displayName: userDoc.get('displayName') });
-      });
-    } else {
-      setUser(null);
-    }
+  useEffectOnce(() => {
+    const unsub = getFirebaseAuth().onAuthStateChanged((user) => {
+      if (user) {
+        setUser({ id: user.uid, email: user.email!, displayName: 'Test' });
+        getDoc(doc(getFirestore(), 'users', user.uid)).then((userDoc) => {
+          setUser({ id: user.uid, email: user.email!, displayName: userDoc.get('displayName') });
+        });
+      } else {
+        setUser(null);
+      }
+    });
+    return () => {
+      unsub();
+    };
   });
-  return <Context.Provider value={{ user, refreshUser: () => {} }}>{children}</Context.Provider>;
+  return <Context.Provider value={{ user }}>{children}</Context.Provider>;
 }
 
 export const useUser = () => useContext(Context);

@@ -12,7 +12,7 @@ export function Field({ label, children, ...props }: FieldProps) {
     <RadixForm.Field {...props} className={clsx('w-full', props.className)}>
       {label && (
         <RadixForm.Label asChild>
-          <label className={clsx('block', 'mb-1')}>{label}</label>
+          <label className={clsx('block', 'mb-1', 'pl-1')}>{label}</label>
         </RadixForm.Label>
       )}
       {children}
