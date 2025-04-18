@@ -1,3 +1,2 @@
-export * from './fetch-topics';
-export * from './add-topic';
+export * from './actions';
 export * from './types';

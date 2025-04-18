@@ -5,7 +5,9 @@ import { TopicList } from './topic-list';
 export default function TopicsPage() {
   return (
     <div className={clsx('mt-12')}>
-      <h1 className={clsx('text-center', 'font-bold', 'text-white', 'mb-8', 'text-4xl')}>Темы</h1>
+      <h1 className={clsx('text-center', 'font-bold', 'text-white', 'mb-8', 'text-4xl')}>
+        Список тем
+      </h1>
       <main
         className={clsx(
           'flex',

@@ -6,7 +6,7 @@ import Link from 'next/link';
 import clsx from 'clsx';
 import { FaArrowRightLong, FaPlus } from 'react-icons/fa6';
 
-import { addTopic, fetchTopics, Topic } from '@/features/topics';
+import { addTopic, fetchMyTopics, Topic } from '@/features/topics';
 import { useUser } from '@/features/user';
 import { Spinner } from '@/features/spinner';
 import { Field, Form, Input, SubmitButton } from '@/components/form';
@@ -20,7 +20,7 @@ export function TopicList() {
   };
   useEffect(() => {
     if (user) {
-      fetchTopics(user.id).then(setTopics);
+      fetchMyTopics().then(setTopics);
     } else if (user === null) {
       replace('/');
     }
@@ -37,7 +37,7 @@ export function TopicList() {
           if (!user || !name) {
             return;
           }
-          const id = await addTopic({ name, uid: user.id });
+          const id = await addTopic({ name });
           addTopicToList({ id, name });
         }}
       >

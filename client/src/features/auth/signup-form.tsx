@@ -17,16 +17,18 @@ export function SignupForm({ className }: SignupFormProps) {
   const { replace } = useRouter();
   const { user } = useUser();
   const [isNewAccount, setIsNewAccount] = useState<boolean>(false);
+
   if (user === undefined) {
     return <Spinner />;
   }
+
   if (user && !user?.displayName) {
     return (
       <Form
         className={clsx('flex', 'flex-col', 'space-y-4', 'w-80', className)}
         action={async (data) => {
           const displayName = data.get('name') as string;
-          await updateUser(user.id, { displayName });
+          await updateUser({ displayName });
         }}
       >
         <h2 className={clsx('text-center', 'text-2xl', 'font-bold')}>
@@ -40,10 +42,12 @@ export function SignupForm({ className }: SignupFormProps) {
       </Form>
     );
   }
+
   if (user) {
     replace('/topics');
     return null;
   }
+
   return (
     <Form
       className={clsx('flex', 'flex-col', 'space-y-4', 'w-80', className)}
