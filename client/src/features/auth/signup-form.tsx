@@ -5,9 +5,9 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 import { Field, Form, Input, SubmitButton } from '@/components/form';
+import { Spinner } from '@/components/spinner';
 
 import { signUp, signIn, useUser, updateUser } from '../user';
-import { Spinner } from '../spinner';
 
 export type SignupFormProps = {
   className?: string;

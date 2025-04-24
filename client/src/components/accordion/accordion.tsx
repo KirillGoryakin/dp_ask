@@ -48,9 +48,9 @@ export function AccordionItem({
             )}
           >
             <div className={clsx('flex', 'text-lg', 'pr-6')}>
-              {header.length > 160 ? `${header.slice(0, 165).trim()}...` : header}
+              {header.length > 155 ? `${header.slice(0, 155).trim()}...` : header}
             </div>
-            <IoIosArrowDown className={clsx('text-xl', 'transition-transform')} />
+            <IoIosArrowDown className={clsx('text-xl', 'transition-transform', 'shrink-0')} />
           </div>
         </RadixAccordion.Trigger>
       </RadixAccordion.Header>

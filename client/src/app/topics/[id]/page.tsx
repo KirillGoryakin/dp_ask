@@ -31,8 +31,7 @@ export default async function SingleTopicPage({ params: { id } }: SingleTopicPag
       >
         <h2 className={clsx('font-bold', 'text-white', 'text-2xl')}>{topic.name}</h2>
         <div className={clsx('h-[1px]', 'bg-white/10', 'w-full')} />
-        <div className={clsx('text-xl')}>Вопросы:</div>
-        <QuestionList initialQuestions={topic.questions} />
+        <QuestionList topicId={id} initialQuestions={topic.questions} />
       </main>
     </div>
   );

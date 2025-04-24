@@ -8,7 +8,7 @@ import { FaArrowRightLong, FaPlus } from 'react-icons/fa6';
 
 import { addTopic, fetchMyTopics, Topic } from '@/features/topics';
 import { useUser } from '@/features/user';
-import { Spinner } from '@/features/spinner';
+import { Spinner } from '@/components/spinner';
 import { Field, Form, Input, SubmitButton } from '@/components/form';
 
 export function TopicList() {
@@ -67,7 +67,7 @@ export function TopicList() {
             )}
           >
             <div className={clsx('flex', 'text-lg', 'pr-6')}>
-              {topic.name.length > 160 ? `${topic.name.slice(0, 165).trim()}...` : topic.name}
+              {topic.name.length > 155 ? `${topic.name.slice(0, 155).trim()}...` : topic.name}
             </div>
             <FaArrowRightLong className={clsx('flex', 'text-lg', 'shrink-0', 'text-white')} />
           </Link>

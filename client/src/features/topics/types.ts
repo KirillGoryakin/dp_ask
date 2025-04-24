@@ -1,11 +1,4 @@
-export type Question = {
-  id: string;
-  answerOptions: string[];
-  correctAnswer: string;
-  question: string;
-  reward: number;
-  type: 'text' | 'checkbox' | 'radio';
-};
+import { Question } from '../questions';
 
 export type Topic = {
   id: string;

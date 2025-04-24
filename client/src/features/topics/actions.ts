@@ -2,7 +2,8 @@ import { addDoc, collection, doc, getDoc, getDocs, query, where } from 'firebase
 
 import { getFirebaseAuth, getFirestore } from '@/firebase';
 
-import { Question, Topic } from './types';
+import { Topic } from './types';
+import { Question } from '../questions';
 
 export async function fetchMyTopics(): Promise<Topic[]> {
   const uid = getFirebaseAuth().currentUser?.uid;
@@ -34,6 +35,7 @@ export async function fetchTopic(id: string): Promise<Topic> {
   if (!questionDocs.empty) {
     topic.questions = questionDocs.docs.map<Question>((doc) => ({
       id: doc.id,
+      topicId: id,
       answerOptions: doc.get('answer_options'),
       correctAnswer: doc.get('correct_answer'),
       question: doc.get('question'),
