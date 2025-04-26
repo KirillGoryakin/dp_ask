@@ -25,7 +25,28 @@ export function Header() {
         <h1 className={clsx('w-32', 'text-4xl', 'leading-none', 'font-semibold')}>АСК</h1>
       </Link>
       <div className="grow" />
+      <div className={clsx('flex', 'items-center', 'space-x-6')}>
+        <HeaderLink href="/topics">Темы</HeaderLink>
+        <HeaderLink href="/tests">Тесты</HeaderLink>
+      </div>
+      <div className="grow" />
       <UserSection />
     </header>
+  );
+}
+
+type HeaderLinkProps = {
+  href: string;
+  children: React.ReactNode;
+  className?: string;
+};
+function HeaderLink({ children, href, className }: HeaderLinkProps) {
+  return (
+    <Link
+      className={clsx('font-semibold', 'transition-colors', 'hover:text-zinc-400', className)}
+      href={href}
+    >
+      {children}
+    </Link>
   );
 }

@@ -45,7 +45,7 @@ export function SignupForm({ className }: SignupFormProps) {
 
   if (user) {
     replace('/topics');
-    return null;
+    return <Spinner />;
   }
 
   return (

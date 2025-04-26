@@ -1,4 +1,5 @@
 import * as RadixSelect from '@radix-ui/react-select';
+import useResizeObserver from '@react-hook/resize-observer';
 import clsx from 'clsx';
 import { IoIosArrowDown } from 'react-icons/io';
 
@@ -40,6 +41,7 @@ export function Select({ className, placeholder, children, ...props }: SelectPro
       <RadixSelect.Portal>
         <RadixSelect.Content
           className={clsx(
+            'max-w-[48rem]',
             'bg-black/35',
             'rounded-xl',
             'backdrop-blur-lg',

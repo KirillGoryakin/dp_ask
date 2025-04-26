@@ -11,7 +11,7 @@ import { useUser } from '@/features/user';
 import { Spinner } from '@/components/spinner';
 import { Field, Form, Input, SubmitButton } from '@/components/form';
 
-export function TopicList() {
+export function TopicsContent() {
   const { replace } = useRouter();
   const { user } = useUser();
   const [topics, setTopics] = useState<Topic[]>();

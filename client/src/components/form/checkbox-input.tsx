@@ -2,12 +2,12 @@
 
 import clsx from 'clsx';
 import * as RadixCheckbox from '@radix-ui/react-checkbox';
-import { ComponentProps, useState } from 'react';
 import { MdCheckBoxOutlineBlank, MdCheckBox } from 'react-icons/md';
 
 export type CheckboxInputProps = Omit<RadixCheckbox.CheckboxProps, 'asChild'> & { label?: string };
 
 export function CheckboxInput({ className, label, ...props }: CheckboxInputProps) {
+  const text = label ?? props.value;
   return (
     <RadixCheckbox.Root {...props} asChild>
       <label
@@ -56,7 +56,7 @@ export function CheckboxInput({ className, label, ...props }: CheckboxInputProps
             />
           </RadixCheckbox.Indicator>
         </div>
-        <span>{label ?? props.value}</span>
+        {text && <span className={clsx('ml-2')}>{text}</span>}
       </label>
     </RadixCheckbox.Root>
   );

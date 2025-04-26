@@ -1,12 +1,12 @@
 import clsx from 'clsx';
 
-import { TopicsContent } from './topics-content';
+import { NewTestForm } from './new-test-form';
 
-export default function TopicsPage() {
+export default function NewTestPage() {
   return (
     <div className={clsx('mt-12')}>
-      <h1 className={clsx('text-center', 'font-bold', 'text-white', 'mb-8', 'text-4xl')}>
-        Список тем
+      <h1 className={clsx('text-center', 'font-bold', 'text-white', 'mb-4', 'text-4xl')}>
+        Новый тест
       </h1>
       <main
         className={clsx(
@@ -24,7 +24,7 @@ export default function TopicsPage() {
           'shadow-inner',
         )}
       >
-        <TopicsContent />
+        <NewTestForm />
       </main>
     </div>
   );
