@@ -1,10 +1,14 @@
 import clsx from 'clsx';
 import Image from 'next/image';
+import { FiExternalLink } from 'react-icons/fi';
+import Link from 'next/link';
 
 import { fetchTest } from '@/features/tests';
 import { generateQrCode } from '@/lib/utils';
 import { BaseURL } from '@/lib/network';
 import { CopiableText } from '@/components/copiable-text';
+import { Button } from '@/components/button';
+
 import { EditTestForm } from './edit-test-form';
 
 export type EditTestPageProps = {
@@ -43,7 +47,16 @@ export default async function EditTestPage({ params: { id } }: EditTestPageProps
             width={320}
             height={320}
           />
-          <CopiableText className={clsx('flex-1', 'min-w-0')}>{href}</CopiableText>
+          <div
+            className={clsx('flex', 'flex-col', 'items-center', 'space-y-4', 'flex-1', 'min-w-0')}
+          >
+            <CopiableText className={clsx('flex-1', 'min-w-0')}>{href}</CopiableText>
+            <Button primary className={clsx('w-max')}>
+              <Link href={href} target="_blank">
+                <FiExternalLink className={clsx('text-2xl')} />
+              </Link>
+            </Button>
+          </div>
         </div>
         <div className={clsx('h-[1px]', 'bg-white/10', 'w-full')} />
         <h2 className={clsx('font-bold', 'text-white', 'text-2xl')}>Редактировать тест</h2>
