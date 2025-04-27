@@ -29,7 +29,7 @@ export function TestsContent() {
       {tests.map((test) => (
         <Link
           key={test.id}
-          href={`/tests/${test.id}`}
+          href={`/tests/${test.id}/edit`}
           className={clsx(
             'flex',
             'items-center',

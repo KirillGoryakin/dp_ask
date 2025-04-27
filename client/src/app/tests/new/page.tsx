@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 
-import { NewTestForm } from './new-test-form';
+import { CreateTestForm } from './create-test-form';
 
 export default function NewTestPage() {
   return (
@@ -24,7 +24,7 @@ export default function NewTestPage() {
           'shadow-inner',
         )}
       >
-        <NewTestForm />
+        <CreateTestForm />
       </main>
     </div>
   );

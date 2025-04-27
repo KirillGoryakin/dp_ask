@@ -1,4 +1,13 @@
-import { addDoc, collection, doc, getDoc, getDocs, query, where } from 'firebase/firestore/lite';
+import {
+  addDoc,
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  query,
+  updateDoc,
+  where,
+} from 'firebase/firestore/lite';
 
 import { getFirebaseAuth, getFirestore } from '@/firebase';
 
@@ -50,4 +59,18 @@ export async function addTest(test: Omit<Test, 'id'>) {
     uid,
   });
   return doc.id;
+}
+
+export async function updateTest(test: Omit<Partial<Test>, 'id'> & { id: string }) {
+  const uid = getFirebaseAuth().currentUser?.uid;
+  if (!uid) {
+    throw new Error('User is not authenticated');
+  }
+  const db = getFirestore();
+  await updateDoc(doc(db, 'tests', test.id), {
+    name: test.name,
+    description: test.description,
+    topic_id: test.topicId,
+    question_ids: test.questionIds,
+  });
 }

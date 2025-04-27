@@ -21,13 +21,15 @@ import { Spinner } from '@/components/spinner';
 import { fetchQuestions, Question } from '@/features/questions';
 import { Button } from '@/components/button';
 import { getRandomItems } from '@/lib/utils';
-import { addTest } from '@/features/tests';
+import { Test } from '@/features/tests';
 
-export type NewTestFormProps = {
+export type TestFormProps = {
   className?: string;
+  onSubmit?: (test: Omit<Test, 'id'>) => boolean | void | Promise<boolean | void>;
+  defaultValues?: Partial<Test>;
 };
 
-export function NewTestForm({ className }: NewTestFormProps) {
+export function TestForm({ className, onSubmit, defaultValues }: TestFormProps) {
   const { replace } = useRouter();
   const { user } = useUser();
   const [topics, setTopics] = useState<Topic[]>();
@@ -39,9 +41,13 @@ export function NewTestForm({ className }: NewTestFormProps) {
     }
   }, [user, replace]);
 
-  const [selectedTopicId, setSelectedTopicId] = useState<string>();
+  const [selectedTopicId, setSelectedTopicId] = useState<string | undefined>(
+    defaultValues?.topicId,
+  );
   const [questions, setQuestions] = useState<Question[]>();
-  const [selectedQuestionIds, setSelectedQuestionIds] = useState<string[]>([]);
+  const [selectedQuestionIds, setSelectedQuestionIds] = useState<string[]>(
+    defaultValues?.questionIds ?? [],
+  );
   const [count, setCount] = useState(1);
   useEffect(() => {
     if (selectedTopicId) {
@@ -63,24 +69,25 @@ export function NewTestForm({ className }: NewTestFormProps) {
         const formData = new FormData(e.currentTarget);
         const name = formData.get('name') as string;
         const description = formData.get('description') as string;
-        await addTest({
+        const reset = await onSubmit?.({
           name,
           description,
           topicId: selectedTopicId!,
           questionIds: selectedQuestionIds,
         });
-        (e.target as HTMLFormElement).reset();
-        setSelectedTopicId(undefined);
-        setQuestions(undefined);
-        setSelectedQuestionIds([]);
-        setCount(1);
+        if (reset) {
+          (e.target as HTMLFormElement).reset();
+          setSelectedTopicId(defaultValues?.topicId);
+          setSelectedQuestionIds(defaultValues?.questionIds ?? []);
+          setCount(1);
+        }
       }}
     >
       <Field name="name" label="Заголовок">
-        <Input />
+        <Input defaultValue={defaultValues?.name} />
       </Field>
       <Field name="description" label="Описание">
-        <Textarea />
+        <Textarea defaultValue={defaultValues?.description} />
       </Field>
       <Field name="topic_id" label="Тема">
         <Select
@@ -140,7 +147,7 @@ export function NewTestForm({ className }: NewTestFormProps) {
                 />
               ))}
             </div>
-            <SubmitButton>Создать тест</SubmitButton>
+            <SubmitButton>Сохранить тест</SubmitButton>
           </>
         )
       )}
