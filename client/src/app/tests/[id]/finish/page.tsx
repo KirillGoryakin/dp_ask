@@ -1,25 +1,24 @@
 import clsx from 'clsx';
 
 import { fetchTest } from '@/features/tests';
-import { fetchQuestions } from '@/features/questions';
 
-import { DoTestForm } from './do-test-form';
-
-export type SingleTestPageProps = {
+export type FinishTestPageProps = {
   params: { id: string };
 };
 
-export default async function SingleTestPage({ params: { id } }: SingleTestPageProps) {
+export default async function FinishTestPage({ params: { id } }: FinishTestPageProps) {
   const test = await fetchTest(id);
-  const questions = await fetchQuestions(test.topicId, test.questionIds);
   return (
     <div className={clsx('mt-12')}>
+      <h1 className={clsx('text-center', 'font-bold', 'text-white', 'mb-8', 'text-4xl')}>
+        Тест завершён
+      </h1>
       <main
         className={clsx(
           'flex',
           'flex-col',
           'space-y-4',
-          'w-[50rem]',
+          'w-[40rem]',
           'mx-auto',
           'py-5',
           'px-6',
@@ -31,9 +30,7 @@ export default async function SingleTestPage({ params: { id } }: SingleTestPageP
         )}
       >
         <h2 className={clsx('font-bold', 'text-white', 'text-2xl')}>{test.name}</h2>
-        <p className={clsx('text-white', 'text-lg')}>{test.description}</p>
-        <div className={clsx('h-[1px]', 'bg-white/10', 'w-full')} />
-        <DoTestForm test={test} questions={questions} />
+        <p className={clsx('text-center')}>Результаты теста были отправлены вашему учителю.</p>
       </main>
     </div>
   );

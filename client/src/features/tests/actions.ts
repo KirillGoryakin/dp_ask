@@ -74,3 +74,21 @@ export async function updateTest(test: Omit<Partial<Test>, 'id'> & { id: string 
     question_ids: test.questionIds,
   });
 }
+
+export async function finishTest({
+  testId,
+  name,
+  answers,
+}: {
+  testId: string;
+  name: string;
+  answers: Record<string, string>;
+}) {
+  const db = getFirestore();
+  const resDoc = await addDoc(collection(db, 'tests', testId, 'results'), {
+    name,
+    answers,
+    date: new Date(),
+  });
+  return resDoc.id;
+}

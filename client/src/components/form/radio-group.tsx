@@ -14,6 +14,7 @@ export type RadioItemProps = Omit<RadixRadio.RadioGroupItemProps, 'asChild'> & {
 };
 
 export function RadioItem({ className, label, ...props }: RadioItemProps) {
+  const text = label ?? props.value;
   return (
     <RadixRadio.Item {...props} asChild>
       <label
@@ -60,7 +61,7 @@ export function RadioItem({ className, label, ...props }: RadioItemProps) {
             )}
           />
         </div>
-        <span>{label ?? props.value}</span>
+        {text && <span className={clsx('ml-2')}>{text}</span>}
       </label>
     </RadixRadio.Item>
   );
