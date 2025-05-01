@@ -1,6 +1,8 @@
 import Link from 'next/link';
 import { clsx } from 'clsx';
 
+import { AuthOnly } from '@/components/auth-only';
+
 import { UserSection } from './user-section';
 
 export function Header() {
@@ -25,10 +27,12 @@ export function Header() {
         <h1 className={clsx('w-32', 'text-4xl', 'leading-none', 'font-semibold')}>АСК</h1>
       </Link>
       <div className="grow" />
-      <div className={clsx('flex', 'items-center', 'space-x-6')}>
-        <HeaderLink href="/topics">Темы</HeaderLink>
-        <HeaderLink href="/tests">Тесты</HeaderLink>
-      </div>
+      <AuthOnly>
+        <div className={clsx('flex', 'items-center', 'space-x-6')}>
+          <HeaderLink href="/topics">Темы</HeaderLink>
+          <HeaderLink href="/tests">Тесты</HeaderLink>
+        </div>
+      </AuthOnly>
       <div className="grow" />
       <UserSection />
     </header>

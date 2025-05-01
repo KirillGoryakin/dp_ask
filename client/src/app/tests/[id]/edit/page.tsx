@@ -28,7 +28,8 @@ export default async function EditTestPage({ params: { id } }: EditTestPageProps
           'flex',
           'flex-col',
           'space-y-4',
-          'w-[50rem]',
+          'lg:w-[50rem]',
+          'w-full',
           'mx-auto',
           'py-5',
           'px-6',
@@ -40,7 +41,7 @@ export default async function EditTestPage({ params: { id } }: EditTestPageProps
         )}
       >
         <h2 className={clsx('font-bold', 'text-white', 'text-2xl')}>Пройти тест</h2>
-        <div className={clsx('flex', 'space-x-4', 'items-center')}>
+        <div className={clsx('flex', 'gap-4', 'justify-center', 'items-center', 'flex-wrap')}>
           <Image
             className={clsx('block', 'size-80', 'rounded-2xl', 'shrink-0')}
             src={qrCodeUrl}
@@ -49,7 +50,7 @@ export default async function EditTestPage({ params: { id } }: EditTestPageProps
             height={320}
           />
           <div
-            className={clsx('flex', 'flex-col', 'items-center', 'space-y-4', 'flex-1', 'min-w-0')}
+            className={clsx('flex', 'flex-col', 'items-center', 'space-y-4', 'flex-1', 'min-w-64')}
           >
             <CopiableText className={clsx('flex-1', 'min-w-0')}>{href}</CopiableText>
             <Button primary className={clsx('w-max')}>
