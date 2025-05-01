@@ -10,6 +10,7 @@ import { CopiableText } from '@/components/copiable-text';
 import { Button } from '@/components/button';
 
 import { EditTestForm } from './edit-test-form';
+import { TestResultsTable } from './test-results-table';
 
 export type EditTestPageProps = {
   params: { id: string };
@@ -58,6 +59,11 @@ export default async function EditTestPage({ params: { id } }: EditTestPageProps
             </Button>
           </div>
         </div>
+        <div className={clsx('h-[1px]', 'bg-white/10', 'w-full')} />
+        <h2 className={clsx('font-bold', 'text-white', 'text-2xl')}>
+          Сформировать результаты теста
+        </h2>
+        <TestResultsTable test={test} />
         <div className={clsx('h-[1px]', 'bg-white/10', 'w-full')} />
         <h2 className={clsx('font-bold', 'text-white', 'text-2xl')}>Редактировать тест</h2>
         <EditTestForm test={test} />

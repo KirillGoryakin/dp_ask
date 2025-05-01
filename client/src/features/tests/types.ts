@@ -5,3 +5,11 @@ export type Test = {
   topicId: string;
   questionIds: string[];
 };
+
+export type TestResult = {
+  id: string;
+  testId: string;
+  name: string;
+  date: Date;
+  answers: Record<string, string>;
+};

@@ -11,7 +11,7 @@ import {
 
 import { getFirebaseAuth, getFirestore } from '@/firebase';
 
-import { Test } from './types';
+import { Test, TestResult } from './types';
 
 export async function fetchMyTests() {
   const uid = getFirebaseAuth().currentUser?.uid;
@@ -91,4 +91,16 @@ export async function finishTest({
     date: new Date(),
   });
   return resDoc.id;
+}
+
+export async function fetchTestResults(id: string): Promise<TestResult[]> {
+  const db = getFirestore();
+  const { docs } = await getDocs(collection(db, 'tests', id, 'results'));
+  return docs.map<TestResult>((doc) => ({
+    id: doc.id,
+    testId: id,
+    name: doc.get('name'),
+    date: doc.get('date'),
+    answers: doc.get('answers'),
+  }));
 }
