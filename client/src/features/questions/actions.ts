@@ -1,4 +1,13 @@
-import { addDoc, collection, documentId, getDocs, query, where } from 'firebase/firestore/lite';
+import {
+  addDoc,
+  collection,
+  doc,
+  documentId,
+  getDocs,
+  query,
+  updateDoc,
+  where,
+} from 'firebase/firestore/lite';
 
 import { getFirestore } from '@/firebase';
 
@@ -32,4 +41,20 @@ export async function fetchQuestions(topidId: string, ids?: string[]): Promise<Q
     correctAnswer: doc.get('correct_answer'),
     reward: doc.get('reward'),
   }));
+}
+
+export async function updateQuestion({
+  id,
+  topicId,
+  ...question
+}: Omit<Partial<Question>, 'id' | 'topicId'> & Pick<Question, 'id' | 'topicId'>) {
+  const db = getFirestore();
+  await updateDoc(doc(db, 'topics', topicId, 'questions', id), {
+    id,
+    question: question.question,
+    type: question.type,
+    answer_options: question.answerOptions,
+    correct_answer: question.correctAnswer,
+    reward: question.reward,
+  });
 }

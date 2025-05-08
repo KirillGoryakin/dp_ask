@@ -2,6 +2,7 @@
 
 import clsx from 'clsx';
 import { useState } from 'react';
+import { nanoid } from 'nanoid';
 
 import {
   Field,
@@ -17,17 +18,27 @@ import {
 } from '@/components/form';
 import { QUESTION_TYPE_LABELS } from '@/features/topics';
 import { ArrayInput, ArrayInputValue } from '@/components/array-input';
-import { addQuestion, Question } from '@/features/questions';
+import { Question } from '@/features/questions';
 
-export type NewQuestionFormProps = {
+export type QuestionFormProps = {
   className?: string;
-  onCreate?: (question: Question) => void;
+  onSubmit?: (question: Omit<Question, 'id'>) => Promise<void> | void;
+  resetAfterSubmit?: boolean;
+  defaultValues?: Partial<Question>;
   topicId: string;
 };
 
-export function NewQuestionForm({ className, onCreate, topicId }: NewQuestionFormProps) {
-  const [type, setType] = useState<Question['type']>('radio');
-  const [answerOptions, setAnswerOptions] = useState<ArrayInputValue[]>([]);
+export function QuestionForm({
+  className,
+  onSubmit,
+  resetAfterSubmit = false,
+  defaultValues,
+  topicId,
+}: QuestionFormProps) {
+  const [type, setType] = useState<Question['type']>(defaultValues?.type || 'radio');
+  const [answerOptions, setAnswerOptions] = useState<ArrayInputValue[]>(() =>
+    (defaultValues?.answerOptions || []).map((v) => ({ id: nanoid(), value: v })),
+  );
   return (
     <Form
       className={clsx('flex', 'flex-col', 'space-y-4', className)}
@@ -51,20 +62,21 @@ export function NewQuestionForm({ className, onCreate, topicId }: NewQuestionFor
           correctAnswer,
           reward,
         };
-        const questionId = await addQuestion(question);
-        onCreate?.({ ...question, id: questionId });
-        (e.target as HTMLFormElement).reset();
-        setAnswerOptions([]);
-        setType('radio');
+        await onSubmit?.(question);
+        if (resetAfterSubmit) {
+          (e.target as HTMLFormElement).reset();
+          setAnswerOptions([]);
+          setType('radio');
+        }
       }}
     >
       <Field name="question" label="Вопрос">
-        <Textarea />
+        <Textarea defaultValue={defaultValues?.question} />
       </Field>
       <Field name="type" label="Тип вопроса">
         <Select
           name="type"
-          defaultValue="radio"
+          defaultValue={defaultValues?.type || 'radio'}
           onValueChange={(value) => setType(value as Question['type'])}
         >
           {Object.entries(QUESTION_TYPE_LABELS).map(([type, label]) => (
@@ -74,7 +86,7 @@ export function NewQuestionForm({ className, onCreate, topicId }: NewQuestionFor
       </Field>
       {!type ? null : type === 'text' ? (
         <Field name="correct_answer" label="Правильный ответ">
-          <Input name="correct_answer" />
+          <Input name="correct_answer" defaultValue={defaultValues?.correctAnswer} />
         </Field>
       ) : (
         <div>
@@ -84,7 +96,7 @@ export function NewQuestionForm({ className, onCreate, topicId }: NewQuestionFor
           </div>
           <div className={clsx('flex')}>
             <ArrayInput values={answerOptions} setValues={setAnswerOptions} />
-            <RadioGroup name="correct_answer">
+            <RadioGroup name="correct_answer" defaultValue={defaultValues?.correctAnswer}>
               <div className={clsx('flex', 'flex-col')}>
                 {answerOptions.map(({ id }, index, arr) => {
                   const isLast = index + 1 === arr.length;
@@ -94,6 +106,9 @@ export function NewQuestionForm({ className, onCreate, topicId }: NewQuestionFor
                       name={`correct_answer_${index}`}
                       value={index}
                       label=""
+                      defaultChecked={(
+                        defaultValues?.correctAnswer?.split(',').map(Number) ?? []
+                      ).includes(index)}
                       className={clsx(
                         '!rounded-l-none',
                         arr.length === 1
@@ -135,11 +150,11 @@ export function NewQuestionForm({ className, onCreate, topicId }: NewQuestionFor
           max={1000}
           name="reward"
           className={clsx('!w-20', 'text-right')}
-          defaultValue={1}
+          defaultValue={defaultValues?.reward || 1}
         />
       </Field>
       <SubmitButton className={clsx('w-max')} disabled={!type}>
-        Создать вопрос
+        Сохранить
       </SubmitButton>
     </Form>
   );
