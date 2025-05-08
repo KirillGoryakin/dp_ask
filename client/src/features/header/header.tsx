@@ -28,13 +28,13 @@ export function Header() {
       </Link>
       <div className="grow" />
       <AuthOnly>
-        <div className={clsx('flex', 'items-center', 'space-x-6')}>
+        <div className={clsx('flex', 'items-center', 'space-x-6', 'mr-60')}>
           <HeaderLink href="/topics">Темы</HeaderLink>
           <HeaderLink href="/tests">Тесты</HeaderLink>
         </div>
       </AuthOnly>
       <div className="grow" />
-      <UserSection />
+      {/* <UserSection /> */}
     </header>
   );
 }
