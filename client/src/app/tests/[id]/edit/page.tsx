@@ -13,10 +13,11 @@ import { EditTestForm } from './edit-test-form';
 import { TestResultsTable } from './test-results-table';
 
 export type EditTestPageProps = {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 };
 
-export default async function EditTestPage({ params: { id } }: EditTestPageProps) {
+export default async function EditTestPage({ params }: EditTestPageProps) {
+  const { id } = await params;
   const test = await fetchTest(id);
   const href = new BaseURL('tests/' + id).toString();
   const qrCodeUrl = await generateQrCode(href);

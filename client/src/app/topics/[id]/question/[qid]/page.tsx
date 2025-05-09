@@ -5,12 +5,11 @@ import { fetchQuestions } from '@/features/questions';
 import { EditQuestionForm } from './edit-question-form';
 
 export type SingleTopicPageProps = {
-  params: { id: string; qid: string };
+  params: Promise<{ id: string; qid: string }>;
 };
 
-export default async function SingleTopicPage({
-  params: { id: topicId, qid: questionId },
-}: SingleTopicPageProps) {
+export default async function SingleTopicPage({ params }: SingleTopicPageProps) {
+  const { id: topicId, qid: questionId } = await params;
   const [question] = await fetchQuestions(topicId, [questionId]);
   return (
     <div className={clsx('mt-12')}>

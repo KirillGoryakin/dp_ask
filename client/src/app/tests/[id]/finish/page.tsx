@@ -3,10 +3,11 @@ import clsx from 'clsx';
 import { fetchTest } from '@/features/tests';
 
 export type FinishTestPageProps = {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 };
 
-export default async function FinishTestPage({ params: { id } }: FinishTestPageProps) {
+export default async function FinishTestPage({ params }: FinishTestPageProps) {
+  const { id } = await params;
   const test = await fetchTest(id);
   return (
     <div className={clsx('mt-12')}>

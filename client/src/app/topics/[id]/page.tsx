@@ -5,10 +5,11 @@ import { fetchTopic } from '@/features/topics';
 import { QuestionList } from './question-list';
 
 export type SingleTopicPageProps = {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 };
 
-export default async function SingleTopicPage({ params: { id } }: SingleTopicPageProps) {
+export default async function SingleTopicPage({ params }: SingleTopicPageProps) {
+  const { id } = await params;
   const topic = await fetchTopic(id);
   return (
     <div className={clsx('mt-12')}>
