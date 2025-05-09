@@ -6,10 +6,11 @@ import { fetchQuestions } from '@/features/questions';
 import { DoTestForm } from './do-test-form';
 
 export type SingleTestPageProps = {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 };
 
-export default async function SingleTestPage({ params: { id } }: SingleTestPageProps) {
+export default async function SingleTestPage({ params }: SingleTestPageProps) {
+  const { id } = await params;
   const test = await fetchTest(id);
   const questions = await fetchQuestions(test.topicId, test.questionIds);
   return (
