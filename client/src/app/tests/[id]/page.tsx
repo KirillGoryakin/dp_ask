@@ -33,7 +33,7 @@ export default async function SingleTestPage({ params }: SingleTestPageProps) {
         )}
       >
         <h2 className={clsx('font-bold', 'text-white', 'text-2xl')}>{test.name}</h2>
-        <p className={clsx('text-white', 'text-lg')}>{test.description}</p>
+        <p className={clsx('text-white', 'text-lg', 'whitespace-pre')}>{test.description}</p>
         <div className={clsx('h-[1px]', 'bg-white/10', 'w-full')} />
         <DoTestForm test={test} questions={questions} />
       </main>
