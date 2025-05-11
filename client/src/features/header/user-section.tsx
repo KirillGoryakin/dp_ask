@@ -13,7 +13,7 @@ export function UserSection() {
   if (user) {
     return (
       <div className={clsx('flex', 'items-center', 'space-x-4')}>
-        <span>Здравствуйте, {user.displayName || user.email}</span>
+        {/* <span>Здравствуйте, {user.displayName || user.email}</span> */}
         <Button primary onClick={signOut}>
           <MdLogout />
         </Button>

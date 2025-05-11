@@ -23,18 +23,18 @@ export function Header() {
       )}
       id="site-header"
     >
-      <Link className={clsx('flex', 'ml-4', 'w-60')} href="/">
+      <Link className={clsx('flex', 'ml-4')} href="/">
         <h1 className={clsx('w-32', 'text-4xl', 'leading-none', 'font-semibold')}>АСК</h1>
       </Link>
       <div className="grow" />
       <AuthOnly>
-        <div className={clsx('flex', 'items-center', 'space-x-6', 'mr-60')}>
+        <div className={clsx('flex', 'items-center', 'space-x-6', 'sm:mr-32')}>
           <HeaderLink href="/topics">Темы</HeaderLink>
           <HeaderLink href="/tests">Тесты</HeaderLink>
         </div>
       </AuthOnly>
       <div className="grow" />
-      {/* <UserSection /> */}
+      <UserSection />
     </header>
   );
 }
