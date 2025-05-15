@@ -69,7 +69,14 @@ export function TestResultsTable({ test }: TestResultsTableProps) {
         }
         totalScore += r.answers[id]?.score;
         maxScore += q.reward;
-        row.push(`${r.answers[id]?.answer ?? '-'} (${r.answers[id]?.score})`);
+        const ans =
+          q.type === 'text'
+            ? r.answers[id]?.answer
+            : r.answers[id]?.answer
+                .split(',')
+                .map((v) => q.answerOptions[+v])
+                .join('; ');
+        row.push(`${ans ?? '-'} (${r.answers[id]?.score})`);
       });
       row.push(`${totalScore} / ${maxScore} (${+((totalScore / maxScore) * 100).toFixed(2)}%)`);
       data.push(row);
