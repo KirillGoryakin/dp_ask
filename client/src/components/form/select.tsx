@@ -31,9 +31,11 @@ export function Select({ className, placeholder, children, ...props }: SelectPro
             className,
           )}
         >
-          <RadixSelect.Value placeholder={placeholder} />
-          <RadixSelect.Icon asChild>
-            <IoIosArrowDown className={clsx('text-lg')} />
+          <div className={clsx('flex-1', 'line-clamp-1')}>
+            <RadixSelect.Value placeholder={placeholder} />
+          </div>
+          <RadixSelect.Icon asChild className={clsx('text-lg', 'shrink-0')}>
+            <IoIosArrowDown />
           </RadixSelect.Icon>
         </div>
       </RadixSelect.Trigger>

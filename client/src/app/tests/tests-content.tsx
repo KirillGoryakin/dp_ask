@@ -42,9 +42,7 @@ export function TestsContent() {
             'hover:bg-white/30',
           )}
         >
-          <div className={clsx('flex', 'text-lg', 'pr-6')}>
-            {test.name.length > 155 ? `${test.name.slice(0, 155).trim()}...` : test.name}
-          </div>
+          <div className={clsx('flex-1', 'line-clamp-2', 'text-lg', 'pr-6')}>{test.name}</div>
           <FaArrowRightLong className={clsx('flex', 'text-lg', 'shrink-0', 'text-white')} />
         </Link>
       ))}

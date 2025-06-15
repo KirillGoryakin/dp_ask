@@ -15,7 +15,7 @@ export function CheckboxInput({ className, label, ...props }: CheckboxInputProps
           'flex',
           'items-center',
           'w-full',
-          'h-10',
+          'min-h-10',
           'py-2',
           'px-4',
           'rounded-lg',
@@ -56,7 +56,7 @@ export function CheckboxInput({ className, label, ...props }: CheckboxInputProps
             />
           </RadixCheckbox.Indicator>
         </div>
-        {text && <span className={clsx('ml-2')}>{text}</span>}
+        {text && <span className={clsx('ml-2', 'flex-1')}>{text}</span>}
       </label>
     </RadixCheckbox.Root>
   );

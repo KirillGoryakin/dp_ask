@@ -36,18 +36,26 @@ export function QuestionList({ topicId, initialQuestions = [] }: QuestionListPro
               key={q.id}
               value={q.id}
               header={q.question}
-              contentClassName={clsx('space-y-4')}
+              contentClassName={clsx('space-y-4', '[&_span]:text-gray-400')}
             >
               <div className={clsx('text-sm', 'text-zinc-400')}>id: {q.id}</div>
-              <div>Вопрос: {q.question}</div>
-              <div>Тип: {QUESTION_TYPE_LABELS[q.type]}</div>
+              <div>
+                <span>Вопрос:</span> {q.question}
+              </div>
+              <div>
+                <span>Тип:</span> {QUESTION_TYPE_LABELS[q.type]}
+              </div>
               {q.type === 'text' ? (
-                <div>Правильный ответ: {q.correctAnswer}</div>
+                <div>
+                  <span>Правильный ответ:</span> {q.correctAnswer}
+                </div>
               ) : (
                 <>
-                  <div>Варианты ответа: {q.answerOptions.join(', ')}</div>
                   <div>
-                    Правильный ответ:{' '}
+                    <span>Варианты ответа:</span> {q.answerOptions.join(', ')}
+                  </div>
+                  <div>
+                    <span>Правильный ответ:</span>{' '}
                     {q.correctAnswer
                       .split(',')
                       .map((v) => q.answerOptions[+v])
@@ -55,7 +63,9 @@ export function QuestionList({ topicId, initialQuestions = [] }: QuestionListPro
                   </div>
                 </>
               )}
-              <div>Количество баллов за правильный ответ: {q.reward}</div>
+              <div>
+                <span>Баллы за правильный ответ:</span> {q.reward}
+              </div>
               <Button>
                 <Link href={`/topics/${topicId}/question/${q.id}`}>Редактировать</Link>
               </Button>

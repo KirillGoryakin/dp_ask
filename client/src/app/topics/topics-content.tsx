@@ -67,9 +67,7 @@ export function TopicsContent() {
               'hover:bg-white/30',
             )}
           >
-            <div className={clsx('flex', 'text-lg', 'pr-6')}>
-              {topic.name.length > 155 ? `${topic.name.slice(0, 155).trim()}...` : topic.name}
-            </div>
+            <div className={clsx('flex-1', 'text-lg', 'pr-6', 'line-clamp-2')}>{topic.name}</div>
             <FaArrowRightLong className={clsx('flex', 'text-lg', 'shrink-0', 'text-white')} />
           </Link>
         ))}
