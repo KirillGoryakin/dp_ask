@@ -64,11 +64,9 @@ export function TestForm({ className, onSubmit, defaultValues }: TestFormProps) 
   return (
     <Form
       className={clsx('flex', 'flex-col', 'space-y-4', className)}
-      onSubmit={async (e) => {
-        e.preventDefault();
-        const formData = new FormData(e.currentTarget);
-        const name = formData.get('name') as string;
-        const description = formData.get('description') as string;
+      onSubmit={async (e, data) => {
+        const name = data.get('name') as string;
+        const description = data.get('description') as string;
         const reset = await onSubmit?.({
           name,
           description,

@@ -20,10 +20,13 @@ export function UserProvider({ children }: PropsWithChildren) {
   useEffectOnce(() => {
     const unsub = getFirebaseAuth().onAuthStateChanged((user) => {
       if (user) {
-        setUser({ id: user.uid, email: user.email!, displayName: undefined });
-        getDoc(doc(getFirestore(), 'users', user.uid)).then((userDoc) => {
-          setUser({ id: user.uid, email: user.email!, displayName: userDoc.get('displayName') });
-        });
+        getDoc(doc(getFirestore(), 'users', user.uid))
+          .then((userDoc) => {
+            setUser({ id: user.uid, email: user.email!, displayName: userDoc.get('displayName') });
+          })
+          .catch(() => {
+            setUser({ id: user.uid, email: user.email!, displayName: undefined });
+          });
       } else {
         setUser(null);
       }

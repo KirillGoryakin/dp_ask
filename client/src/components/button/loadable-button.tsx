@@ -3,17 +3,14 @@
 import { forwardRef, useState } from 'react';
 import { clsx } from 'clsx';
 
-import { SvgSpinner } from '@/components/icons';
+import { Button, ButtonProps } from './button';
+import { Spinner } from '../spinner';
 
-import { Button } from './button';
-
-export type LoadableButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
-  primary?: boolean;
+export type LoadableButtonProps = ButtonProps & {
   loading?: boolean;
-  children: React.ReactNode;
 };
 export const LoadableButton = forwardRef(function LoadableButton(
-  { children, loading, type = 'button', ...props }: LoadableButtonProps,
+  { children, loading, ...props }: LoadableButtonProps,
   ref: React.Ref<HTMLButtonElement>,
 ) {
   const [isClickLoading, setIsClickLoading] = useState(false);
@@ -21,7 +18,7 @@ export const LoadableButton = forwardRef(function LoadableButton(
   const { onClick } = props;
   if (onClick) {
     props.onClick = async (e) => {
-      if (isClickLoading) return;
+      if (isLoading) return;
       const result = onClick(e) as void | Promise<void>;
       if (typeof result?.then === 'function') {
         setIsClickLoading(true);
@@ -33,45 +30,29 @@ export const LoadableButton = forwardRef(function LoadableButton(
       }
     };
   }
-
   return (
-    <Button {...props} ref={ref} asChild>
-      <button type={type}>
+    <Button {...props} ref={ref}>
+      <div className={clsx('transition-opacity', isLoading ? 'opacity-0' : 'opacity-100')}>
         {children}
-        {isLoading && <ButtonLoading />}
-      </button>
+      </div>
+      {isLoading && (
+        <div
+          className={clsx(
+            'absolute',
+            'top-0',
+            'left-0',
+            'w-full',
+            'h-full',
+            'flex',
+            'items-center',
+            'justify-center',
+            'animate-in',
+            'fade-in',
+          )}
+        >
+          <Spinner className={clsx('size-8')} />
+        </div>
+      )}
     </Button>
   );
 });
-
-function ButtonLoading() {
-  return (
-    <span
-      className={clsx(
-        'absolute',
-        'z-10',
-        'top-0',
-        'left-0',
-        '!m-0',
-        'flex',
-        'justify-center',
-        'items-center',
-        'w-full',
-        'h-full',
-        'bg-white',
-        'group-[.primary]/button:bg-amber-600',
-      )}
-    >
-      <SvgSpinner
-        className={clsx(
-          'text-2xl',
-          'animate-in',
-          'ease-linear',
-          'spin-in-[-360deg]',
-          'duration-500',
-          'repeat-infinite',
-        )}
-      />
-    </span>
-  );
-}

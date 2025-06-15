@@ -32,13 +32,14 @@ export function TopicsContent() {
     <>
       <Form
         className={clsx('flex', 'items-end', 'space-x-4', 'px-4')}
-        action={async (data) => {
+        onSubmit={async (e, data) => {
           const name = data.get('name') as string | null;
           if (!user || !name) {
             return;
           }
           const id = await addTopic({ name });
           addTopicToList({ id, name });
+          (e.target as HTMLFormElement).reset();
         }}
       >
         <Field name="name" label="Добавить тему">

@@ -30,10 +30,8 @@ export function DoTestForm({ className, test, questions: questionsInitial }: DoT
   return (
     <Form
       className={clsx('flex', 'flex-col', 'space-y-6', className)}
-      onSubmit={async (e) => {
-        e.preventDefault();
-        const formData = new FormData(e.currentTarget);
-        const name = (formData.get('name') as string) || '';
+      onSubmit={async (_, data) => {
+        const name = (data.get('name') as string) || '';
 
         const answers: Record<string, string> = {};
         test.questionIds.forEach((id) => {
@@ -42,13 +40,13 @@ export function DoTestForm({ className, test, questions: questionsInitial }: DoT
             return;
           }
           if (q.type === 'text') {
-            answers[id] = formData.get(id) as string;
+            answers[id] = data.get(id) as string;
           } else if (q.type === 'radio') {
-            answers[id] = formData.get(id) as string;
+            answers[id] = data.get(id) as string;
           } else {
             const answerOptions = q.answerOptions.map((_, i) => `${id}_${i}`);
             answers[id] = answerOptions
-              .filter((name) => formData.has(name))
+              .filter((name) => data.has(name))
               .map((name) => name.split('_')[1])
               .join(',');
           }

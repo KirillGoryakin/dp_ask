@@ -3,7 +3,7 @@
 import clsx from 'clsx';
 import { useState } from 'react';
 
-import { Button } from '@/components/button';
+import { Button, LoadableButton } from '@/components/button';
 import { fetchTestResults, Test, TestResult } from '@/features/tests';
 import { fetchQuestions, Question } from '@/features/questions';
 import { exportCsv } from '@/lib/utils';
@@ -49,8 +49,6 @@ export function TestResultsTable({ test }: TestResultsTableProps) {
       }, {}),
     }));
 
-    console.log(result);
-
     const data: string[][] = [];
     data[0] = [
       'Имя',
@@ -87,9 +85,9 @@ export function TestResultsTable({ test }: TestResultsTableProps) {
   return (
     <div>
       <div className={clsx('flex', 'gap-2')}>
-        <Button primary onClick={updateResults}>
+        <LoadableButton primary onClick={updateResults}>
           Сформировать
-        </Button>
+        </LoadableButton>
         {data && data.length > 0 && (
           <Button primary onClick={() => exportCsv(data)}>
             Экспорт в .csv

@@ -47,6 +47,8 @@ export function Select({ className, placeholder, children, ...props }: SelectPro
             'backdrop-blur-lg',
             'shadow-white/20',
             'shadow-inner',
+            'animate-in',
+            'fade-in',
           )}
         >
           <RadixSelect.ScrollUpButton />

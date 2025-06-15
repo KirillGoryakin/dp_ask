@@ -42,9 +42,7 @@ export function QuestionForm({
   return (
     <Form
       className={clsx('flex', 'flex-col', 'space-y-4', className)}
-      onSubmit={async (e) => {
-        e.preventDefault();
-        const data = new FormData(e.currentTarget);
+      onSubmit={async (e, data) => {
         const text = (data.get('question') as string | null) ?? '';
         const correctAnswer =
           type === 'radio'
