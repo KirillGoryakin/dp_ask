@@ -67,13 +67,14 @@ export function TestResultsTable({ test }: TestResultsTableProps) {
         }
         totalScore += r.answers[id]?.score;
         maxScore += q.reward;
-        const ans =
-          q.type === 'text'
+        const ans = r.answers[id]?.answer
+          ? q.type === 'text'
             ? r.answers[id]?.answer
             : r.answers[id]?.answer
                 .split(',')
                 .map((v) => q.answerOptions[+v])
-                .join('; ');
+                .join('; ')
+          : undefined;
         row.push(`${ans ?? '-'} (${r.answers[id]?.score})`);
       });
       row.push(`${totalScore} / ${maxScore} (${+((totalScore / maxScore) * 100).toFixed(2)}%)`);
@@ -86,7 +87,11 @@ export function TestResultsTable({ test }: TestResultsTableProps) {
     <div>
       <div className={clsx('flex', 'gap-2')}>
         <LoadableButton onClick={updateResults}>Сформировать</LoadableButton>
-        {data && data.length > 0 && <Button onClick={() => exportCsv(data)}>Экспорт в .csv</Button>}
+        {data && data.length > 0 && (
+          <Button className={clsx('animate-in', 'fade-in')} onClick={() => exportCsv(data)}>
+            Экспорт в .csv
+          </Button>
+        )}
       </div>
       <div
         className={clsx(
