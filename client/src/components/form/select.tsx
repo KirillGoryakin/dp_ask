@@ -1,5 +1,4 @@
 import * as RadixSelect from '@radix-ui/react-select';
-import useResizeObserver from '@react-hook/resize-observer';
 import clsx from 'clsx';
 import { IoIosArrowDown } from 'react-icons/io';
 
