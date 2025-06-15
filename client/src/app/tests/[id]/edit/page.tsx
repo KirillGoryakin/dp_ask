@@ -54,7 +54,7 @@ export default async function EditTestPage({ params }: EditTestPageProps) {
             className={clsx('flex', 'flex-col', 'items-center', 'space-y-4', 'flex-1', 'min-w-64')}
           >
             <CopiableText className={clsx('flex-1', 'min-w-0')}>{href}</CopiableText>
-            <Button primary className={clsx('w-max')}>
+            <Button className={clsx('w-max')}>
               <Link href={href} target="_blank">
                 <FiExternalLink className={clsx('text-2xl')} />
               </Link>

@@ -10,7 +10,7 @@ export function NewTestButton() {
   const isSsr = useIsSSR();
   if (isSsr) return null;
   return (
-    <Button primary asChild>
+    <Button asChild>
       <Link href="/tests/new">
         <FaPlus />
       </Link>

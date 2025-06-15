@@ -11,7 +11,7 @@ export function SubmitButton({ children, asChild: _, ...props }: SubmitButtonPro
   const { pending } = useFormContext();
   return (
     <RadixForm.Submit {...props} asChild>
-      <LoadableButton type="submit" primary loading={pending}>
+      <LoadableButton type="submit" loading={pending}>
         {children}
       </LoadableButton>
     </RadixForm.Submit>

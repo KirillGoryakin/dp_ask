@@ -85,14 +85,8 @@ export function TestResultsTable({ test }: TestResultsTableProps) {
   return (
     <div>
       <div className={clsx('flex', 'gap-2')}>
-        <LoadableButton primary onClick={updateResults}>
-          Сформировать
-        </LoadableButton>
-        {data && data.length > 0 && (
-          <Button primary onClick={() => exportCsv(data)}>
-            Экспорт в .csv
-          </Button>
-        )}
+        <LoadableButton onClick={updateResults}>Сформировать</LoadableButton>
+        {data && data.length > 0 && <Button onClick={() => exportCsv(data)}>Экспорт в .csv</Button>}
       </div>
       <div
         className={clsx(

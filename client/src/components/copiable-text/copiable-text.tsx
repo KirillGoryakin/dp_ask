@@ -28,7 +28,6 @@ export function CopiableText({ className, children }: CopiableTextProps) {
     >
       <div className={clsx('absolute', 'top-2', 'right-2', 'z-10')}>
         <Button
-          primary
           className={clsx('!bg-white/40', '[&:not(:disabled):hover]:!bg-white/60')}
           onClick={() => navigator.clipboard.writeText(children)}
         >

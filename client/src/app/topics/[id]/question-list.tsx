@@ -56,7 +56,7 @@ export function QuestionList({ topicId, initialQuestions = [] }: QuestionListPro
                 </>
               )}
               <div>Количество баллов за правильный ответ: {q.reward}</div>
-              <Button primary>
+              <Button>
                 <Link href={`/topics/${topicId}/question/${q.id}`}>Редактировать</Link>
               </Button>
             </AccordionItem>

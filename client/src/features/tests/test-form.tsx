@@ -109,7 +109,6 @@ export function TestForm({ className, onSubmit, defaultValues }: TestFormProps) 
           <>
             <div className={clsx('flex', 'items-center', 'space-x-6')}>
               <Button
-                primary
                 onClick={() => {
                   const randomQuestions = getRandomItems(questions, count);
                   setSelectedQuestionIds(randomQuestions.map((q) => q.id));
