@@ -14,7 +14,7 @@ export function Header() {
         'mb-4',
         'md:mb-0',
         'flex',
-        'pt-4',
+        'p-4',
         'md:p-6',
         'lg:px-8',
         'lg:py-8',
