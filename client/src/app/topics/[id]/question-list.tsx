@@ -11,10 +11,11 @@ import { QUESTION_TYPE_LABELS } from '@/features/topics';
 
 export type QuestionListProps = {
   topicId: string;
+  topicTitle?: string;
   initialQuestions?: Question[];
 };
 
-export function QuestionList({ topicId, initialQuestions = [] }: QuestionListProps) {
+export function QuestionList({ topicId, topicTitle, initialQuestions = [] }: QuestionListProps) {
   const [questions, setQuestions] = useState(initialQuestions);
   return (
     <>
@@ -26,6 +27,10 @@ export function QuestionList({ topicId, initialQuestions = [] }: QuestionListPro
           setQuestions([{ id, ...question }, ...questions]);
         }}
         resetAfterSubmit
+        generateWithAI={{
+          show: true,
+          data: { topicTitle, existingQuestions: questions.map((q) => q.question) },
+        }}
       />
       <div className={clsx('h-[1px]', 'bg-white/10', 'w-full')} />
       <div className={clsx('text-xl')}>Вопросы:</div>

@@ -2,7 +2,7 @@
 
 import * as RadixForm from '@radix-ui/react-form';
 import clsx from 'clsx';
-import { FormEvent, useState } from 'react';
+import { FormEvent, forwardRef, useState } from 'react';
 
 import { createContext } from '@/lib/react-utils';
 
@@ -22,12 +22,13 @@ export { useFormContext };
 export type FormProps = Omit<RadixForm.FormProps, 'action' | 'onSubmit'> & {
   onSubmit?: (e: FormEvent<HTMLFormElement>, data: FormData) => void | Promise<void>;
 };
-export function Form(props: FormProps) {
+export const Form = forwardRef(function Form(props: FormProps, ref: React.Ref<HTMLFormElement>) {
   const [state, setState] = useState<FormContext>(defaultFormContextValue);
   return (
     <FormProvider value={state}>
       <RadixForm.Root
         {...props}
+        ref={ref}
         onSubmit={async (e) => {
           e.preventDefault();
           if (state.pending) {
@@ -46,7 +47,7 @@ export function Form(props: FormProps) {
       />
     </FormProvider>
   );
-}
+});
 
 export type FieldProps = RadixForm.FormFieldProps & { label?: string };
 export function Field({ label, children, ...props }: FieldProps) {

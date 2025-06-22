@@ -1,7 +1,7 @@
 'use client';
 
 import clsx from 'clsx';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { nanoid } from 'nanoid';
 
 import {
@@ -20,11 +20,14 @@ import { QUESTION_TYPE_LABELS } from '@/features/topics';
 import { ArrayInput, ArrayInputValue } from '@/components/array-input';
 import { Question } from '@/features/questions';
 
+import { GenerateWithAIButton, GenerateWithAIButtonProps } from './generate-with-ai-button';
+
 export type QuestionFormProps = {
   className?: string;
   onSubmit?: (question: Omit<Question, 'id'>) => Promise<void> | void;
   resetAfterSubmit?: boolean;
   defaultValues?: Partial<Question>;
+  generateWithAI?: { show: boolean; data: GenerateWithAIButtonProps['data'] };
   topicId: string;
 };
 
@@ -32,15 +35,24 @@ export function QuestionForm({
   className,
   onSubmit,
   resetAfterSubmit = false,
-  defaultValues,
+  defaultValues: initialDefaultValues,
+  generateWithAI,
   topicId,
 }: QuestionFormProps) {
+  const [defaultValues, setDefaultValues] = useState(initialDefaultValues);
   const [type, setType] = useState<Question['type']>(defaultValues?.type || 'radio');
   const [answerOptions, setAnswerOptions] = useState<ArrayInputValue[]>(() =>
     (defaultValues?.answerOptions || []).map((v) => ({ id: nanoid(), value: v })),
   );
+  const formRef = useRef<HTMLFormElement>(null);
+  useEffect(() => {
+    if (formRef.current) {
+      formRef.current.reset();
+    }
+  }, [defaultValues]);
   return (
     <Form
+      ref={formRef}
       className={clsx('flex', 'flex-col', 'space-y-4', className)}
       onSubmit={async (e, data) => {
         const text = (data.get('question') as string | null) ?? '';
@@ -151,9 +163,31 @@ export function QuestionForm({
           defaultValue={defaultValues?.reward || 1}
         />
       </Field>
-      <SubmitButton className={clsx('w-max')} disabled={!type}>
-        Сохранить
-      </SubmitButton>
+      <div className={clsx('flex', 'justify-between')}>
+        <SubmitButton className={clsx('w-max')} disabled={!type}>
+          Сохранить
+        </SubmitButton>
+        {generateWithAI && generateWithAI?.show && (
+          <GenerateWithAIButton
+            data={generateWithAI.data}
+            onGenerate={(newQuestion) => {
+              // Проблема - не получается задать варианты ответа для radio
+              // Ещё нужно перерендерить Select
+              setDefaultValues({
+                question: newQuestion.question,
+                type: newQuestion.type,
+                correctAnswer: newQuestion.correctAnswer,
+              });
+              setType(newQuestion.type);
+              if (newQuestion.type !== 'text') {
+                setAnswerOptions(
+                  newQuestion.answerOptions.map((v) => ({ id: nanoid(), value: v })),
+                );
+              }
+            }}
+          />
+        )}
+      </div>
     </Form>
   );
 }
