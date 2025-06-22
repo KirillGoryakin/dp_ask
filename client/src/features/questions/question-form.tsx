@@ -45,12 +45,14 @@ export function QuestionForm({
       onSubmit={async (e, data) => {
         const text = (data.get('question') as string | null) ?? '';
         const correctAnswer =
-          type === 'radio'
-            ? ((data.get('correct_answer') as string) ?? '0')
-            : answerOptions
-                .map((_, i) => data.get(`correct_answer_${i}`))
-                .filter((v) => v)
-                .join(',');
+          type === 'text'
+            ? ((data.get('correct_answer') as string) ?? '')
+            : type === 'radio'
+              ? ((data.get('correct_answer') as string) ?? '0')
+              : answerOptions
+                  .map((_, i) => data.get(`correct_answer_${i}`))
+                  .filter((v) => v)
+                  .join(',');
         const reward = +(data.get('reward') ?? 1);
         const question = {
           topicId,
